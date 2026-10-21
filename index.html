@@ -197,66 +197,13 @@ s:"𝕤",t:"𝕥",u:"𝕦",v:"𝕧",w:"𝕨",x:"𝕩",
 y:"𝕪",z:"𝕫"
 };
 
-function convert(text, map) 
-return [...text].map(char => map[char] || char).join("");
+
+function convert(text, map) {
+  return [...text].map(char => map[char] || char).join("");
 }
+
 
 function decorateLatin(text) {
-  const fullwidth = [...text].map(char => {
-    const code = char.charCodeAt(0);
-    return code >= 33 && code <= 126
-      ? String.fromCharCode(code + 0xFEE0)
-      : char;
-  }).join("");
-
-  const circledMap = {};
-  const upper = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-  const lower = [..."abcdefghijklmnopqrstuvwxyz"];
-
-  upper.forEach((char, i) => {
-    circledMap[char] = String.fromCodePoint(0x24B6 + i);
-  });
-
-  lower.forEach((char, i) => {
-    circledMap[char] = String.fromCodePoint(0x24D0 + i);
-  });
-
-  const circled = convert(text, circledMap);
-
-  return [
-    "♡ " + text + " ♡",
-    "✨ " + [...text].join(" ") + " ✨",
-    "꧁ " + text + " ꧂",
-    "『 " + text + " 』",
-    "★彡 " + text + " 彡★",
-    "𓆩 " + text + " 𓆪",
-    "୨୧ " + text + " ୨୧",
-    "༺ " + text + " ༻",
-    "♛ " + text + " ♛",
-    "ミ★ " + text + " ★彡",
-    convert(text, scriptMap),
-    convert(text, boldMap),
-    convert(text, doubleMap),
-    circled,
-    fullwidth,
-    text.toUpperCase(),
-    text.toLowerCase()
-  ];
-}
- (text) {
-return [
-"♡ " + text + " ♡",
-"✨ " + [...text].join(" ") + " ✨",
-"꧁ " + text + " ꧂",
-"『 " + text + " 』",
-"★彡 " + text + " 彡★",
-"𓆩 " + text + " 𓆪",
-"୨୧ " + text + " ୨୧",
-convert(text, scriptMap),
-convert(text, boldMap),
-convert(text, doubleMap)
-];
-}
 
 function decorateArabic(text) {
 return [
