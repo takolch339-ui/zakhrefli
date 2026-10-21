@@ -341,3 +341,61 @@ if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(gmail)) {
 
 </body>
   </html>
+button.setAttribute("aria-label", "زخرفة الحرف " + letter);
+
+        button.addEventListener("click", () => {
+          const variants = type === "arabic"
+            ? decorateArabic(letter)
+            : decorateLatin(letter);
+
+          renderResults(
+            type === "arabic" ? $("arabicResults") : $("englishResults"),
+            variants
+          );
+
+          showMessage("✨ اختار زخرفة الحرف وانسخها.");
+        });
+
+        container.appendChild(button);
+      });
+    }
+
+    addLetters("arabicLetters", arabicAlphabet, "arabic");
+    addLetters("englishLetters", englishAlphabet, "english");
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(item => {
+          item.classList.toggle("active", item === tab);
+        });
+
+        ["names", "arabic", "english"].forEach(name => {
+          $(name + "Panel").classList.toggle(
+            "hidden",
+            name !== tab.dataset.tab
+          );
+        });
+
+        showMessage("");
+      });
+    });
+
+    const nicknames = [
+      "ملكة الأحلام ♡",
+      "روح جميلة ✨",
+      "Little Star ☆",
+      "Sweet Soul 💗",
+      "Moon Girl 🌙",
+      "أميرة قلبي 🎀",
+      "Dreamer ♡",
+      "『 الأميرة 』",
+      "꧁ الملكة ꧂",
+      "𝓜𝔂 𝓦𝓸𝓻𝓵𝓭 ♡"
+    ];
+
+    nicknames.forEach(nickname => {
+      $("nicknames").appendChild(makeResult(nickname));
+    });
+  </script>
+</body>
+</html>
