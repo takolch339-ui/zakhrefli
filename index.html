@@ -197,11 +197,10 @@ s:"𝕤",t:"𝕥",u:"𝕦",v:"𝕧",w:"𝕨",x:"𝕩",
 y:"𝕪",z:"𝕫"
 };
 
-function convert(text, map) {
+function convert(text, map) 
 return [...text].map(char => map[char] || char).join("");
 }
 
-function
 function decorateLatin(text) {
   const fullwidth = [...text].map(char => {
     const code = char.charCodeAt(0);
