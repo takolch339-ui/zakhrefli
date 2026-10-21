@@ -138,6 +138,17 @@
 
   <main>
     <section class="card">
+      
+<label for="gmail">أدخل عنوان Gmail تاعك</label>
+<input
+  id="gmail"
+  type="email"
+  placeholder="example@gmail.com"
+  autocomplete="email"
+  required
+>
+<p class="small">ندخلو عنوان البريد فقط، بلا كلمة سر.</p>
+      
       <label for="username">اكتب الاسم اللي حاب تزخرفو</label>
 
       <input
@@ -276,6 +287,15 @@
     }
 
     document.getElementById("generate").addEventListener("click", () => {
+      
+const gmail = document.getElementById("gmail").value.trim();
+
+if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(gmail)) {
+  message.textContent = "دخل عنوان Gmail صحيح من فضلك.";
+  document.getElementById("gmail").focus();
+  return;
+}
+
       const text = username.value.trim();
 
       if (!text) {
