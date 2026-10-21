@@ -40,6 +40,41 @@ button:focus-visible,input:focus-visible{outline:3px solid #c4b5fd;outline-offse
 #message{min-height:24px;color:#6d28d9;line-height:1.8}
 footer{text-align:center;padding:22px;color:var(--muted);font-size:13px}
 @media(max-width:380px){.card{padding:14px}.letter-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.tab{font-size:12px}.result{gap:6px;padding:9px}.copy{padding:9px;font-size:13px}}
+
+/* تحسينات احترافية */
+.card {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 32px #34205214;
+}
+
+.primary {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  box-shadow: 0 5px 14px #8b5cf633;
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.primary:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.copy,
+.letter {
+  transition: background .2s ease, transform .2s ease;
+}
+
+.copy:hover,
+.letter:hover {
+  transform: translateY(-2px);
+}
+
+input:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px #8b5cf61c;
+  }
 </style>
 </head>
 <body>
@@ -166,7 +201,50 @@ function convert(text, map) {
 return [...text].map(char => map[char] || char).join("");
 }
 
+function
 function decorateLatin(text) {
+  const fullwidth = [...text].map(char => {
+    const code = char.charCodeAt(0);
+    return code >= 33 && code <= 126
+      ? String.fromCharCode(code + 0xFEE0)
+      : char;
+  }).join("");
+
+  const circledMap = {};
+  const upper = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+  const lower = [..."abcdefghijklmnopqrstuvwxyz"];
+
+  upper.forEach((char, i) => {
+    circledMap[char] = String.fromCodePoint(0x24B6 + i);
+  });
+
+  lower.forEach((char, i) => {
+    circledMap[char] = String.fromCodePoint(0x24D0 + i);
+  });
+
+  const circled = convert(text, circledMap);
+
+  return [
+    "♡ " + text + " ♡",
+    "✨ " + [...text].join(" ") + " ✨",
+    "꧁ " + text + " ꧂",
+    "『 " + text + " 』",
+    "★彡 " + text + " 彡★",
+    "𓆩 " + text + " 𓆪",
+    "୨୧ " + text + " ୨୧",
+    "༺ " + text + " ༻",
+    "♛ " + text + " ♛",
+    "ミ★ " + text + " ★彡",
+    convert(text, scriptMap),
+    convert(text, boldMap),
+    convert(text, doubleMap),
+    circled,
+    fullwidth,
+    text.toUpperCase(),
+    text.toLowerCase()
+  ];
+}
+ (text) {
 return [
 "♡ " + text + " ♡",
 "✨ " + [...text].join(" ") + " ✨",
