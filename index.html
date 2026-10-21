@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8b5cf6">
+  <meta name="description" content="زخرف اسمك بالعربية والإنجليزية وانسخه لبايو تيك توك وإنستغرام.">
+  <title>Zakhrefli ✨ | زخرفة الأسماء</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #faf7ff;
+      color: #302344;
+    }
+
+    header {
+      padding: 28px 16px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      border-radius: 0 0 28px 28px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    header p {
+      margin: 0;
+    }
+
+    main {
+      max-width: 650px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 5px 22px #34205210;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ded3ed;
+      border-radius: 12px;
+      font-size: 16px;
+      outline-color: #8b5cf6;
+      margin-bottom: 12px;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .primary {
+      width: 100%;
+      color: white;
+      background: #8b5cf6;
+    }
+
+    .primary:hover {
+      background: #7542e8;
+    }
+
+    .result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid #eee6f8;
+      border-radius: 12px;
+      margin-top: 10px;
+      background: #fdfbff;
+    }
+
+    .result span {
+      overflow-wrap: anywhere;
+      font-size: 17px;
+    }
+
+    .copy {
+      flex-shrink: 0;
+      color: #6d28d9;
+      background: #ede9fe;
+    }
+
+    .small {
+      color: #746681;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #746681;
+      font-size: 13px;
+    }
+
+    #message {
+      min-height: 24px;
+      color: #6d28d9;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>✨ Zakhrefli</h1>
+    <p>زخرف اسمك وخلي البايو تاعك مميز 💜</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <label for="username">اكتب الاسم اللي حاب تزخرفو</label>
+
+      <input
+        id="username"
+        type="text"
+        maxlength="40"
+        placeholder="مثلاً Lina أو أميرة"
+        autocomplete="off"
+      >
+
+      <button class="primary" id="generate">
+        ✨ زخرف اسمي
+      </button>
+
+      <p class="small">
+        اختار الشكل اللي يعجبك واضغط على «نسخ».
+        الأداة تخدم بلا حساب وبلا كلمة سر.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>💖 الأسماء المزخرفة</h2>
+      <div id="results">
+        <p class="small">اكتب اسمك واضغط على زر الزخرفة.</p>
+      </div>
+      <p id="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>🎀 ألقاب للبايو</h2>
+      <p class="small">اضغط على أي لقب باش تنسخو.</p>
+
+      <div id="nicknames"></div>
+    </section>
+
+    <section class="card">
+      <h2>🔒 الخصوصية</h2>
+      <p class="small">
+        هذا الموقع لا يطلب كلمة سر Gmail ولا يجمع عناوين الإيميل.
+        الأسماء التي تدخلها تُعالج داخل المتصفح فقط.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Zakhrefli ✨ — زخرف اسمك بطريقتك
+  </footer>
+
+  <script>
+    const username = document.getElementById("username");
+    const results = document.getElementById("results");
+    const message = document.getElementById("message");
+
+    function decorateLatin(text) {
+      const styles = [
+        text => "♡ " + text + " ♡",
+        text => "✨ " + [...text].join(" ") + " ✨",
+        text => "꧁ " + text + " ꧂",
+        text => "『 " + text + " 』",
+        text => "★彡 " + text + " 彡★",
+        text => "𓆩 " + text + " 𓆪",
+        text => "୨୧ " + text + " ୨୧"
+      ];
+
+      const special = {
+        A: "𝓐", B: "𝓑", C: "𝓒", D: "𝓓",
+        E: "𝓔", F: "𝓕", G: "𝓖", H: "𝓗",
+        I: "𝓘", J: "𝓙", K: "𝓚", L: "𝓛",
+        M: "𝓜", N: "𝓝", O: "𝓞", P: "𝓟",
+        Q: "𝓠", R: "𝓡", S: "𝓢", T: "𝓣",
+        U: "𝓤", V: "𝓥", W: "𝓦", X: "𝓧",
+        Y: "𝓨", Z: "𝓩",
+        a: "𝓪", b: "𝓫", c: "𝓬", d: "𝓭",
+        e: "𝓮", f: "𝓯", g: "𝓰", h: "𝓱",
+        i: "𝓲", j: "𝓳", k: "𝓴", l: "𝓵",
+        m: "𝓶", n: "𝓷", o: "𝓸", p: "𝓹",
+        q: "𝓺", r: "𝓻", s: "𝓼", t: "𝓽",
+        u: "𝓾", v: "𝓿", w: "𝔀", x: "𝔁",
+        y: "𝔂", z: "𝔃"
+      };
+
+      const cursive = [...text]
+        .map(char => special[char] || char)
+        .join("");
+
+      return [
+        ...styles.map(style => style(text)),
+        cursive
+      ];
+    }
+
+    function decorateArabic(text) {
+      return [
+        "♡ " + text + " ♡",
+        "✨ " + [...text].join("ـ") + " ✨",
+        "꧁ " + text + " ꧂",
+        "『 " + text + " 』",
+        "𓆩 " + text + " 𓆪",
+        "♥︎ " + text + " ♥︎",
+        "★ " + text + " ★"
+      ];
+    }
+
+    function makeResult(value) {
+      const row = document.createElement("div");
+      row.className = "result";
+
+      const name = document.createElement("span");
+      name.textContent = value;
+
+      const button = document.createElement("button");
+      button.className = "copy";
+      button.textContent = "نسخ";
+
+      button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(value);
+          message.textContent = "✅ تم نسخ الاسم!";
+        } catch {
+          const area = document.createElement("textarea");
+          area.value = value;
+          document.body.appendChild(area);
+          area.select();
+
+          const copied = document.execCommand("copy");
+          area.remove();
+
+          message.textContent = copied
+            ? "✅ تم نسخ الاسم!"
+            : "حدد الاسم وانسخه يدويًا.";
+        }
+      });
+
+      row.append(name, button);
+      return row;
+    }
+
+    document.getElementById("generate").addEventListener("click", () => {
+      const text = username.value.trim();
+
+      if (!text) {
+        message.textContent = "اكتب الاسم أولاً 😊";
+        username.focus();
+        return;
+      }
+
+      results.replaceChildren();
+      message.textContent = "";
+
+      const variants = /[A-Za-z]/.test(text)
+        ? decorateLatin(text)
+        : decorateArabic(text);
+
+      [...new Set(variants)].forEach(value => {
+        results.appendChild(makeResult(value));
+      });
+    });
+
+    username.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        document.getElementById("generate").click();
+      }
+    });
+
+    const nicknames = [
+      "ملكة الأحلام ♡",
+      "روح جميلة ✨",
+      "Little Star ☆",
+      "Sweet Soul 💗",
+      "Moon Girl 🌙",
+      "أميرة قلبي 🎀",
+      "Dreamer ♡"
+    ];
+
+    const nicknameBox = document.getElementById("nicknames");
+
+    nicknames.forEach(nickname => {
+      nicknameBox.appendChild(makeResult(nickname));
+    });
+  </script>
+
+</body>
+  </html>
